@@ -2,6 +2,8 @@ import Search from './Search.js';
 import VideoPlayer from './VideoPlayer.js';
 import VideoList from './VideoList.js';
 import exampleVideoData from '../data/exampleVideoData.js';
+import searchYouTube from '../lib/searchYouTube.js'
+import YOUTUBE_API_KEY from '../config/youtube.js'
 
 
 class App extends React.Component {
@@ -9,9 +11,30 @@ class App extends React.Component {
     super(props);
     this.state = {
       nowPlaying: exampleVideoData[0],
-      playOnClick: exampleVideoData
+      playOnClick: exampleVideoData,
+      query: ''
     };
     this.onClick = this.onListEntryClick.bind(this);
+    this.onChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(e){
+    this.setState({
+      query: e.target.value
+    });
+  }
+  handleSubmit(max, query, key, func){
+    var obj = {
+      max,
+      query,
+      key
+    }
+    func = (data) => {
+      console.log('func running')
+      this.setState({playOnClick: data})
+    }
+    searchYouTube(obj, func)
   }
   onListEntryClick(e) {
     this.setState({
