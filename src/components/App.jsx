@@ -18,10 +18,24 @@ class App extends React.Component {
     this.onChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // componentDidMount(
-  //   var cb = data => this.setState({playOnClick: data.items})
-  //   searchYouTube({max:5, query:'dog', key:YOUTUBE_API_KEY}, cb);
-  // );
+  componentDidMount(){
+    this.props.searchYouTube({
+      max: 5,
+      query: 'cat',
+      key: YOUTUBE_API_KEY
+    },
+      (data) => {
+      this.setState({
+        playOnClick: data
+      }))
+    // console.log(data)
+    // var func = (data) => {
+    //   this.setState({
+    //     playOnClick: data
+    //   })
+    // };
+    // searchYouTube({max: 5, query: 'dog', key: YOUTUBE_API_KEY}, func);
+  };
   handleChange(e){
     this.setState({
       query: e.target.value
