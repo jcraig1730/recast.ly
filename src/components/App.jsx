@@ -18,23 +18,27 @@ class App extends React.Component {
     this.onChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  // componentDidMount(
+  //   var cb = data => this.setState({playOnClick: data.items})
+  //   searchYouTube({max:5, query:'dog', key:YOUTUBE_API_KEY}, cb);
+  // );
   handleChange(e){
     this.setState({
       query: e.target.value
     });
   }
-  handleSubmit(max, query, key, func){
+  handleSubmit(){
     var obj = {
-      max,
-      query,
-      key
-    }
-    func = (data) => {
-      console.log('func running')
-      this.setState({playOnClick: data})
-    }
-    searchYouTube(obj, func)
+      max: 5,
+      query: this.state.query,
+      key: YOUTUBE_API_KEY
+    };
+    var func = (data) => {
+      this.setState({
+        playOnClick: data
+      })
+    };
+    searchYouTube(obj, func);
   }
   onListEntryClick(e) {
     this.setState({
@@ -46,7 +50,7 @@ class App extends React.Component {
       <div>
       <nav className="navbar">
         <div className="col-md-6 offset-md-3">
-          <div><h5><em>search</em><Search /></h5></div>
+          <div><h5><em>search</em><Search change={this.onChange} submit={this.handleSubmit}/></h5></div>
         </div>
       </nav>
       <div className="row">
